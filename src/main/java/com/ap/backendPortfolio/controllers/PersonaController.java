@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 //import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+
 //import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,13 +37,14 @@ public class PersonaController {
 	}
 	
 	// HAY UN SOLO USUARIO AL CUAL SE LE PUEDE MODIFICAR
-	  @PostMapping("/personas") public boolean create(@RequestBody Persona p) {
-	  return personaService.crear(p); }
+	//  @PostMapping("/personas") public boolean create(@RequestBody Persona p) {
+	 // return personaService.crear(p); }
 	 
 	
 	@PutMapping("/personas/{id}")
 	public ResponseEntity<?> update(@RequestBody Persona p, @PathVariable int id) {
 		try {
+			p.setId(id);//agregador x bug(?)
 			personaService.modificar(p);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (NoSuchElementException e) {
