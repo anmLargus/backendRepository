@@ -20,6 +20,7 @@ import com.ap.backendPortfolio.models.Educacion;
 import com.ap.backendPortfolio.services.EducacionService;
 
 
+
 @CrossOrigin("*") //(origins = "http://localhost:4200")
 @RestController
 public class EduController {
@@ -33,8 +34,15 @@ public class EduController {
 	}
 	
 	@GetMapping("/edus/{id}")
-	public Educacion getOne(@PathVariable int id) {
-		return educacionService.traerUno(id); // return new Educacion();
+	public ResponseEntity<Educacion> getOne(@PathVariable int id) {
+		try {
+			Educacion edu = educacionService.traerUno(id); // return new Educacion();
+			return new ResponseEntity<Educacion>(edu , HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<Educacion>(HttpStatus.NOT_FOUND); //
+			//// en realidad la excepcion no se lanzaria, xq en el servicio si no lo encuentra, genera una nueva nota
+		}
 	}
 	
 	@PostMapping("/edus")
