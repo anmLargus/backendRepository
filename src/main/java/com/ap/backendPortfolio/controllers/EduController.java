@@ -28,12 +28,12 @@ public class EduController {
 	@Autowired
 	private EducacionService educacionService;
 	
-	@GetMapping("/edus")
+	@GetMapping("/api/edus")
 	public List<Educacion> getAll() {
 		return educacionService.traerTodo(); // return new ArrayList<Educacion>();
 	}
 	
-	@GetMapping("/edus/{id}")
+	@GetMapping("/api/edus/{id}")
 	public ResponseEntity<Educacion> getOne(@PathVariable int id) {
 		try {
 			Educacion edu = educacionService.traerUno(id); // return new Educacion();
@@ -45,14 +45,15 @@ public class EduController {
 		}
 	}
 	
-	@PostMapping("/edus")
+	@PostMapping("/api/edus")
 	public boolean create(@RequestBody Educacion ed) {		
 		return educacionService.crear(ed);
 	}
 	
-	@PutMapping("/edus/{id}")
+	@PutMapping("/api/edus/{id}")
 	public ResponseEntity<?> update(@RequestBody Educacion ed, @PathVariable int id) {
 		try {
+			ed.setId(id);
 			educacionService.modificar(ed);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (NoSuchElementException e) {;
@@ -60,7 +61,7 @@ public class EduController {
 		}
 	}
 	
-	@DeleteMapping("edus/{id}")
+	@DeleteMapping("/api/edus/{id}")
 	public boolean remove(@PathVariable int id) {
 		return educacionService.borrar(id);
 	}		

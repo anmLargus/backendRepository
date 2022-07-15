@@ -25,27 +25,27 @@ public class JobController {
 	@Autowired
 	private JobService jobService;
 	
-	@GetMapping("/jobs")
+	@GetMapping("/api/jobs")
 	public List<Job> getAll() {
 		return jobService.traerTodo();
 	}
 	
-	@GetMapping("/jobs/{id}")
+	@GetMapping("/api/jobs/{id}")
 	public Job getOne(@PathVariable int id) {
 		return jobService.traerUno(id);
 	}
 	
-	@PostMapping("/jobs")
+	@PostMapping("/api/jobs")
 	public boolean create(@RequestBody Job j) {
 		return jobService.crear(j);
 	}
 	
 
-	@PutMapping("/jobs/{id}")
+	@PutMapping("/api/jobs/{id}")
 	public ResponseEntity<?> update(@RequestBody Job j, @PathVariable int id) {
 		try {
-			//Job existJob = jobService.traerUno(id);  /*EN TUTORIAL ESTABAN ESTAS DOS LÍNEAS DE CÓDIGO (?)*/
-			//j.setId(id);
+			//Job existJob = jobService.traerUno(id); 
+			j.setId(id);
 			jobService.modificar(j);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (NoSuchElementException e) {
@@ -54,7 +54,7 @@ public class JobController {
 	}
 	
 	
-	@DeleteMapping("/jobs/{id}")
+	@DeleteMapping("/api/jobs/{id}")
 	public boolean remove(@PathVariable int id) {
 		return jobService.borrar(id); 
 	}

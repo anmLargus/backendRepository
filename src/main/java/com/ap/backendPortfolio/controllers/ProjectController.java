@@ -24,24 +24,25 @@ public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
 	
-	@GetMapping("/proyectos")
+	@GetMapping("/api/proyectos")
 	public List<Project> getAll() {
 		return projectService.traerTodo();
 	}
 	
-	@GetMapping("/proyectos/{id}")
+	@GetMapping("/api/proyectos/{id}")
 	public Project getOne(@PathVariable int id) {
 		return projectService.traerUno(id);
 	}
 	
-	@PostMapping("/proyectos")
+	@PostMapping("/api/proyectos")
 	public boolean create(@RequestBody Project pr) {
 		return projectService.crear(pr);
 	}
 	
-	@PutMapping("/proyectos/{id}")
+	@PutMapping("/api/proyectos/{id}")
 	public ResponseEntity<?> update(@RequestBody Project pr, @PathVariable int id) {		
 		try {
+			pr.setId(id);
 			projectService.modificar(pr);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (NoSuchElementException e) {
@@ -50,7 +51,7 @@ public class ProjectController {
 		}
 	}
 	
-	@DeleteMapping("/proyectos/{id}")
+	@DeleteMapping("/api/proyectos/{id}")
 	public boolean remove(@PathVariable int id) {
 		return projectService.borrar(id);
 	}

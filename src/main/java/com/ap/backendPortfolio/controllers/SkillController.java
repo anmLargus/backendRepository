@@ -25,24 +25,25 @@ public class SkillController {
 	@Autowired
 	private SkillService skillService;
 	
-	@GetMapping("/skills")
+	@GetMapping("/api/skills")
 	public List<Skill> getAll() {
 		return skillService.traerTodo();
 	}
 	
-	@GetMapping("/skills/{id}")
+	@GetMapping("/api/skills/{id}")
 	public Skill getOne(@PathVariable int id) {
 		return skillService.traerUno(id);
 	}
 	
-	@PostMapping("/skills")
+	@PostMapping("/api/skills")
 	public boolean create(@RequestBody Skill s) {
 		return skillService.crear(s);
 	}
 	
-	@PutMapping("/skills/{id}")
+	@PutMapping("/api/skills/{id}")
 	public ResponseEntity<?> update(@RequestBody Skill s, @PathVariable int id) {
 		try {
+			s.setId(id);
 			skillService.modificar(s);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (NoSuchElementException e) {
@@ -51,7 +52,7 @@ public class SkillController {
 		}
 	}
 
-	@DeleteMapping("/skills/{id}") 
+	@DeleteMapping("/api/skills/{id}") 
 		public boolean remove(@PathVariable int id) {
 		return skillService.borrar(id);
 	}
